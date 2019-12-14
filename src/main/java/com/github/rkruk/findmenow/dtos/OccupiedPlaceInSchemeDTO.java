@@ -1,7 +1,5 @@
 package com.github.rkruk.findmenow.dtos;
 
-
-import java.util.List;
 import java.util.Objects;
 
 public class OccupiedPlaceInSchemeDTO {

@@ -99,5 +99,4 @@ public class UserService {
         user.setPlaces(places);
         userRepository.save(user);
     }
-
 }

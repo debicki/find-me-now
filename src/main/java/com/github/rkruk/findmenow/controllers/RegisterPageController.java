@@ -13,7 +13,6 @@ public class RegisterPageController {
 
     private UserService userService;
 
-    // to be updated
     @Autowired
     public RegisterPageController(UserService userService) {
         this.userService = userService;
@@ -25,9 +24,8 @@ public class RegisterPageController {
     }
 
     @PostMapping
-    public String createUser(String username, String password, String firstName, String lastName, boolean active, String role) {
-        userService.registerUser(username, password, firstName, lastName, active, "ROLE_USER", null);
+    public String createUser(String username, String password, String firstName, String lastName) {
+        userService.registerUser(username, password, firstName, lastName, true, "ROLE_USER", null);
         return "redirect:/login";
     }
-
 }

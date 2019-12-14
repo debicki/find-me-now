@@ -1,6 +1,5 @@
 package com.github.rkruk.findmenow.utils;
 
-
 import com.github.rkruk.findmenow.dtos.PlaceDTO;
 import com.github.rkruk.findmenow.dtos.SchemeDTO;
 import com.github.rkruk.findmenow.dtos.UserDTO;
@@ -55,5 +54,4 @@ public class ModelMapper {
                 place.getCoordinateY(),
                 schemeId);
     }
-
 }

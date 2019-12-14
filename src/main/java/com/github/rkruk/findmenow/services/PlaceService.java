@@ -2,7 +2,6 @@ package com.github.rkruk.findmenow.services;
 
 import com.github.rkruk.findmenow.dtos.PlaceDTO;
 import com.github.rkruk.findmenow.models.Place;
-import com.github.rkruk.findmenow.models.Scheme;
 import com.github.rkruk.findmenow.models.User;
 import com.github.rkruk.findmenow.repositories.PlaceRepository;
 import com.github.rkruk.findmenow.repositories.SchemeRepository;
