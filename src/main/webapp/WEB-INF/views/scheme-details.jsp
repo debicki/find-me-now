@@ -22,6 +22,13 @@
     </div>
     <br>
     <div class="row">
+        <div class="col-12 text-center">
+            <a href="/admin-panel/add-places?scheme=${schemeDTO.id}" class="btn btn-primary btn-sm">Dodaj miejsca</a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
         <c:if test="${schemeDTO.active == true}">
             <div class="col-12 text-center h5">
                 <span>Aktywny i widoczny</span>
