@@ -15,5 +15,4 @@ public class PlaceDTO {
     private Long coordinateX;
     private Long coordinateY;
     private Long schemeId;
-
 }

@@ -1,10 +1,8 @@
 package com.github.rkruk.findmenow.services;
 
-import com.github.rkruk.findmenow.dtos.OccupiedPlaceInSchemeDTO;
 import com.github.rkruk.findmenow.dtos.PlaceDTO;
 import com.github.rkruk.findmenow.dtos.UserDTO;
 import com.github.rkruk.findmenow.models.Place;
-import com.github.rkruk.findmenow.models.Scheme;
 import com.github.rkruk.findmenow.models.User;
 import com.github.rkruk.findmenow.repositories.PlaceRepository;
 import com.github.rkruk.findmenow.repositories.UserRepository;
@@ -48,8 +46,7 @@ public class UserService {
 
     public UserDTO getUserDTOByLastName(String lastName) {
         User user = userRepository.findByLastNameEquals(lastName);
-        UserDTO userDTO = (modelMapper.convert(user));
-        return userDTO;
+        return modelMapper.convert(user);
     }
 
     public List<UserDTO> getAllUserDTOs() {
@@ -73,18 +70,10 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<PlaceDTO> getPlaceIdOfSearchedUser(String lastName) {
+    public List<PlaceDTO> getPlaceDTOListOfSearchedUser(String lastName) {
         User user = userRepository.findByLastNameEquals(lastName);
         List<Place> places = user.getPlaces();
-        for (Place place : places) {
-            Scheme scheme = place.getScheme();
-            scheme.getId();
-        }
-        OccupiedPlaceInSchemeDTO occupiedPlaceInSchemeDTO = new OccupiedPlaceInSchemeDTO();
-        occupiedPlaceInSchemeDTO.setUserId(user.getId());
-
         List<PlaceDTO> placesDTO = new ArrayList<>();
-
         for (Place place : places) {
             placesDTO.add(modelMapper.convert(place));
         }

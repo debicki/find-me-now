@@ -70,8 +70,7 @@ public class PlaceService {
 
     public PlaceDTO getPlaceDTOByName(String placeName) {
         Place place = placeRepository.findPlaceByName(placeName);
-        PlaceDTO placeDTO = modelMapper.convert(place);
-        return placeDTO;
+        return modelMapper.convert(place);
     }
 
     public List<PlaceDTO> getPlaceDTOSByUser(Long id) {
