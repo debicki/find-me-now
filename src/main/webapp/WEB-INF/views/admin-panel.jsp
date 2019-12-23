@@ -96,7 +96,7 @@
                             </c:if>
                             <td class="align-middle">${user.username}</td>
                             <td class="align-middle">${user.role}</td>
-                            <td><a href="/user-details?id=${user.id}" class="btn btn-primary btn-sm">Zobacz</a></td>
+                            <td><a href="/user-panel?id=${user.id}" class="btn btn-primary btn-sm">Zobacz</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
