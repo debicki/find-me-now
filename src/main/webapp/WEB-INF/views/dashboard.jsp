@@ -45,13 +45,13 @@
             <div class="col-1"></div>
             <div class="col-1">
                 <c:forEach items="${allActiveSchemeDTOS}" var="schemeDTO" varStatus="schemeDAOStatus">
-                        <c:if test="${schemeIds.contains(schemeDTO.id)}">
-                            <a href="/?id=${schemeDTO.id}&user=${lastName}" class="btn btn-primary float-right">${schemeDTO.name}</a>
+                        <c:if test="${schemeIds.contains(schemeDTO.id) || activeSearch == false}">
+                            <a href="/?id=${schemeDTO.id}&search=${lastName}" class="btn btn-primary float-right">${schemeDTO.name}</a>
                             <br>
                             <br>
                         </c:if>
-                        <c:if test="${!schemeIds.contains(schemeDTO.id)}">
-                            <a href="/?id=${schemeDTO.id}&user=${lastName}" class="btn btn-secondary float-right">${schemeDTO.name}</a>
+                        <c:if test="${!schemeIds.contains(schemeDTO.id) && activeSearch == true}">
+                            <a href="/?id=${schemeDTO.id}&search=${lastName}" class="btn btn-secondary float-right">${schemeDTO.name}</a>
                             <br>
                             <br>
                         </c:if>

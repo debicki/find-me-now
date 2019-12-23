@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -34,20 +35,30 @@ public class DashboardPageController {
     @GetMapping
     public String showDashboardPage(Model model,
                                     @RequestParam(required = false, defaultValue = "0", name = "id") Long visibleSchemeId,
-                                    @RequestParam(required = false) String user) {
+                                    @RequestParam(required = false) String search) {
         List<SchemeDTO> allActiveSchemeDTOS = schemeService.getAllActiveSchemeDTOs();
 
-        if (user != null && user.length() > 0) {
-            UserDTO userDTO = userService.getUserDTOByLastName(user);
-            List<PlaceDTO> placeDTOS = placeService.getPlaceDTOSByUser(userDTO.getId());
+        if (search == null || search.length() == 0) {
+            model.addAttribute("activeSearch", false);
+        } else {
+            model.addAttribute("activeSearch", true);
+        }
+
+        if (search != null && search.length() > 0) {
+            UserDTO userDTO = userService.getUserDTOByLastName(search);
+            List<PlaceDTO> placeDTOS = new ArrayList<>();
             HashSet<Long> schemeIds = new HashSet<>();
-            for (PlaceDTO placeDTO : placeDTOS) {
-                Long schemeId = placeDTO.getSchemeId();
-                schemeIds.add(schemeId);
+            if (userDTO != null) {
+                placeDTOS = placeService.getPlaceDTOSByUser(userDTO.getId());
+                schemeIds = new HashSet<>();
+                for (PlaceDTO placeDTO : placeDTOS) {
+                    Long schemeId = placeDTO.getSchemeId();
+                    schemeIds.add(schemeId);
+                }
             }
             model.addAttribute("placeDTOS", placeDTOS);
             model.addAttribute("schemeIds", schemeIds);
-            model.addAttribute("lastName", user);
+            model.addAttribute("lastName", search);
         }
 
         model.addAttribute("allActiveSchemeDTOS", allActiveSchemeDTOS);
@@ -60,19 +71,7 @@ public class DashboardPageController {
     }
 
     @PostMapping
-    public String userToBeFound(String search, RedirectAttributes redirectAttributes) {
-        UserDTO userDTO = userService.getUserDTOByLastName(search);
-        List<PlaceDTO> placeDTOS = placeService.getPlaceDTOSByUser(userDTO.getId());
-        HashSet<Long> schemeIds = new HashSet<>();
-        for (PlaceDTO placeDTO : placeDTOS) {
-            Long schemeId = placeDTO.getSchemeId();
-            schemeIds.add(schemeId);
-        }
-
-        redirectAttributes.addFlashAttribute("placeDTOS", placeDTOS);
-        redirectAttributes.addFlashAttribute("schemeIds", schemeIds);
-        redirectAttributes.addFlashAttribute("lastName", search);
-
-        return "redirect:/";
+    public String userToBeFound(String search) {
+        return "redirect:/?search=" + search;
     }
 }

@@ -23,6 +23,7 @@
     <div class="row">
         <div class="col-12 text-center">
             <a href="/admin-panel/add-places?scheme=${schemeDTO.id}" class="btn btn-primary btn-sm">Dodaj miejsca</a>
+            <a href="/admin-panel/remove-places?scheme=${schemeDTO.id}" class="btn btn-primary btn-sm disabled">Usuń miejsca</a>
         </div>
     </div>
     <br>
