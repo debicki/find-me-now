@@ -43,7 +43,7 @@ public class UserPanelPageController {
         Long loggedUserId = userService.getIdOfLoggedUser(loggedUserUsername);
         UserDTO loggedUserDTO = userService.getOne(loggedUserId);
         UserDTO userDTO = null;
-        if (id != null) {
+        if (id != null && loggedUserDTO.getRole().equals("ROLE_ADMIN")) {
             userDTO = userService.getOne(id);
         } else {
             userDTO = loggedUserDTO;
