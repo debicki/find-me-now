@@ -41,7 +41,6 @@ public class UserPanelPageController {
         String username = principal.getName();
         Long id = userService.getIdOfLoggedUser(username);
         UserDTO userDTO = userService.getOne(id);
-        SchemeDTO schemeDTO = null;
         List<PlaceDTO> placeDTOS = new ArrayList<>();
         if (userDTO.getPlacesId() != null) {
             List<Long> placesId = userDTO.getPlacesId();
@@ -49,11 +48,10 @@ public class UserPanelPageController {
                 placeDTOS.add(placeService.getPlaceDTOById(placeId));
             }
         }
-
+        model.addAttribute("loggedUserDTO", userDTO);
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("activeTab", activeTab);
         model.addAttribute("placeDTOS", placeDTOS);
-        model.addAttribute("schemeDTO", schemeDTO);
         return "/WEB-INF/views/user-panel.jsp";
     }
 
