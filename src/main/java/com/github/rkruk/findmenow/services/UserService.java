@@ -46,6 +46,9 @@ public class UserService {
 
     public UserDTO getUserDTOByLastName(String lastName) {
         User user = userRepository.findByLastNameEquals(lastName);
+        if (user == null) {
+            return null;
+        }
         return modelMapper.convert(user);
     }
 
