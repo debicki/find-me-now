@@ -116,7 +116,7 @@
                                 <th>Aktywna</th>
                                 <th>Nazwa schematu</th>
                                 <th>Nazwa miejsca</th>
-                                <th>Szczegóły</th>
+                                <th>Akcje</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -126,7 +126,8 @@
                                     <td class="align-middle">TAK</td>
                                     <td class="align-middle">${schemeNameList.get(placeDTO.schemeId)}</td>
                                     <td class="align-middle">${placeDTO.name}</td>
-                                    <td><a href="#" class="btn btn-primary btn-sm disabled">Zobacz</a></td>
+                                    <td><a href="#" class="btn btn-primary btn-sm disabled">Zobacz</a>
+                                        <a href="#" class="btn btn-primary btn-sm disabled">Zwolnij</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
