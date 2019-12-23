@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user-panel")
@@ -25,7 +27,6 @@ public class UserPanelPageController {
     private UserService userService;
     private PlaceService placeService;
     private SchemeService schemeService;
-
 
     @Autowired
     public UserPanelPageController(UserService userService, PlaceService placeService, SchemeService schemeService) {
@@ -39,6 +40,9 @@ public class UserPanelPageController {
                                     Principal principal,
                                     Long id,
                                     @RequestParam(name = "tab", required = false, defaultValue = "0") Long activeTab) {
+        if (principal == null) {
+            return "redirect:/";
+        }
         String loggedUserUsername = principal.getName();
         Long loggedUserId = userService.getIdOfLoggedUser(loggedUserUsername);
         UserDTO loggedUserDTO = userService.getOne(loggedUserId);
@@ -55,10 +59,16 @@ public class UserPanelPageController {
                 placeDTOS.add(placeService.getPlaceDTOById(placeId));
             }
         }
+        Map<Long, String> schemeNameList = new HashMap<>();
+        List<SchemeDTO> schemeDTOS = schemeService.getAllSchemeDTOs();
+        for (SchemeDTO schemeDTO : schemeDTOS) {
+            schemeNameList.put(schemeDTO.getId(), schemeDTO.getName());
+        }
         model.addAttribute("loggedUserDTO", loggedUserDTO);
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("activeTab", activeTab);
         model.addAttribute("placeDTOS", placeDTOS);
+        model.addAttribute("schemeNameList", schemeNameList);
         return "/WEB-INF/views/user-panel.jsp";
     }
 

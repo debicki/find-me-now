@@ -124,9 +124,9 @@
                                 <tr>
                                     <td class="align-middle">${placeDTOStatus.count}</td>
                                     <td class="align-middle">TAK</td>
-                                    <td class="align-middle">WKRÓTCE</td>
+                                    <td class="align-middle">${schemeNameList.get(placeDTO.schemeId)}</td>
                                     <td class="align-middle">${placeDTO.name}</td>
-                                    <td><a href="/place-details?id=${placeDTO.id}" class="btn btn-primary btn-sm">Zobacz</a></td>
+                                    <td><a href="#" class="btn btn-primary btn-sm disabled">Zobacz</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
