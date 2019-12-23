@@ -31,20 +31,40 @@
     </div>
     <div class="row">
         <div class="col-1">
-            <a href="/user-panel?tab=0" class="btn btn-primary float-right d-none d-lg-block">
-                <i class="fa fa-info-circle"></i> Informacje
-            </a>
-            <a href="/user-panel?tab=0" class="btn btn-primary float-right d-block d-lg-none">
-                <i class="fa fa-info-circle"></i>
-            </a>
+            <c:if test="${loggedUserDTO.role.equals('ROLE_ADMIN')}">
+                <a href="/user-panel?id=${userDTO.id}&tab=0" class="btn btn-primary float-right d-none d-lg-block">
+                    <i class="fa fa-info-circle"></i> Informacje
+                </a>
+                <a href="/user-panel?id=${userDTO.id}&tab=0" class="btn btn-primary float-right d-block d-lg-none">
+                    <i class="fa fa-info-circle"></i>
+                </a>
+            </c:if>
+            <c:if test="${!loggedUserDTO.role.equals('ROLE_ADMIN')}">
+                <a href="/user-panel?tab=0" class="btn btn-primary float-right d-none d-lg-block">
+                    <i class="fa fa-info-circle"></i> Informacje
+                </a>
+                <a href="/user-panel?tab=0" class="btn btn-primary float-right d-block d-lg-none">
+                    <i class="fa fa-info-circle"></i>
+                </a>
+            </c:if>
             <br>
             <br>
-            <a href="/user-panel?tab=1" class="btn btn-primary float-right d-none d-lg-block">
-                <i class="fa fa-table"></i> Rezerwacje
-            </a>
-            <a href="/user-panel?tab=1" class="btn btn-primary float-right d-block d-lg-none">
-                <i class="fa fa-table"></i>
-            </a>
+            <c:if test="${loggedUserDTO.role.equals('ROLE_ADMIN')}">
+                <a href="/user-panel?id=${userDTO.id}&tab=1" class="btn btn-primary float-right d-none d-lg-block">
+                    <i class="fa fa-table"></i> Rezerwacje
+                </a>
+                <a href="/user-panel?id=${userDTO.id}&tab=1" class="btn btn-primary float-right d-block d-lg-none">
+                    <i class="fa fa-table"></i>
+                </a>
+            </c:if>
+            <c:if test="${!loggedUserDTO.role.equals('ROLE_ADMIN')}">
+                <a href="/user-panel?tab=1" class="btn btn-primary float-right d-none d-lg-block">
+                    <i class="fa fa-table"></i> Rezerwacje
+                </a>
+                <a href="/user-panel?tab=1" class="btn btn-primary float-right d-block d-lg-none">
+                    <i class="fa fa-table"></i>
+                </a>
+            </c:if>
         </div>
         <div class="col-1"></div>
         <div class="col-10 text-left">
@@ -59,15 +79,29 @@
                     <p class="h5">Uprawnienia: Administrator</p>
                 </c:if>
                 <br>
-                <p class="h5">
-                    <a href="/user-panel/deactivate-user?id=${userDTO.id}" class="btn btn-primary btn-sm">Wyłącz konto</a>
-                    <br>
-                    <span class="h6"> Uwaga: konto włączyć ponownie może tylko administrator!</span>
-                </p>
+                <c:if test="${!loggedUserDTO.role.equals('ROLE_ADMIN') || userDTO.username.equals(loggedUserDTO.username)}">
+                    <p class="h5">
+                        <a href="/user-panel/deactivate-user?id=${userDTO.id}" class="btn btn-primary btn-sm">Wyłącz konto</a>
+                        <br>
+                        <span class="h6"> Uwaga: konto włączyć ponownie może tylko administrator!</span>
+                    </p>
+                </c:if>
+                <c:if test="${loggedUserDTO.role.equals('ROLE_ADMIN') && !userDTO.username.equals(loggedUserDTO.username)}">
+                    <c:if test="${userDTO.active == true}">
+                        <p class="h5">
+                            <span>Konto aktywne: TAK <a href="/admin-panel/deactivate-user?id=${userDTO.id}" class="btn btn-primary btn-sm">Wyłącz</a></span>
+                        </p>
+                    </c:if>
+                    <c:if test="${userDTO.active == false}">
+                        <p class="h5">
+                            <span>Konto aktywne: NIE <a href="/admin-panel/activate-user?id=${userDTO.id}" class="btn btn-primary btn-sm">Włącz</a></span>
+                        </p>
+                    </c:if>
+                </c:if>
             </c:if>
             <c:if test="${activeTab == 1}">
                 <div class="h1 text-center">
-                    <c:if test="${placeDTO == null}">
+                    <c:if test="${placeDTOS.size() == 0}">
                         <div class="h1 text-center">
                             Tu kiedyś będą rezerwacje użytkownika.
                             <br>
@@ -75,7 +109,7 @@
                             Jak coś zarezerwuje oczywiście. ;)
                         </div>
                     </c:if>
-                    <c:if test="${placeDTO != null}">
+                    <c:if test="${placeDTOS.size() > 0}">
                         <table class="table table-hover table-bordered text-center">
                             <thead>
                             <tr class="thead-dark">
@@ -87,14 +121,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="align-middle">1</td>
-                                <td class="align-middle">Not yet</td>
-                                <td class="align-middle">${schemeDTO.name}</td>
-                                <td class="align-middle">${placeDTO.name}</td>
-                                <td class="align-middle">Not yet</td>
-<%--                                <td><a href="/place-details?id=${place.id}" class="btn btn-primary btn-sm">Zobacz</a></td>--%>
-                            </tr>
+                            <c:forEach items="${placeDTOS}" var="placeDTO" varStatus="placeDTOStatus">
+                                <tr>
+                                    <td class="align-middle">${placeDTOStatus.count}</td>
+                                    <td class="align-middle">TAK</td>
+                                    <td class="align-middle">WKRÓTCE</td>
+                                    <td class="align-middle">${placeDTO.name}</td>
+                                    <td><a href="/place-details?id=${placeDTO.id}" class="btn btn-primary btn-sm">Zobacz</a></td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </c:if>

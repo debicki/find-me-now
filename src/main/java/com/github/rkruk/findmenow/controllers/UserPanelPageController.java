@@ -37,11 +37,17 @@ public class UserPanelPageController {
     @GetMapping
     public String showUserPanelPage(Model model,
                                     Principal principal,
+                                    Long id,
                                     @RequestParam(name = "tab", required = false, defaultValue = "0") Long activeTab) {
-        String username = principal.getName();
-        Long id = userService.getIdOfLoggedUser(username);
-        UserDTO userDTO = userService.getOne(id);
-        SchemeDTO schemeDTO = null;
+        String loggedUserUsername = principal.getName();
+        Long loggedUserId = userService.getIdOfLoggedUser(loggedUserUsername);
+        UserDTO loggedUserDTO = userService.getOne(loggedUserId);
+        UserDTO userDTO = null;
+        if (id != null && loggedUserDTO.getRole().equals("ROLE_ADMIN")) {
+            userDTO = userService.getOne(id);
+        } else {
+            userDTO = loggedUserDTO;
+        }
         List<PlaceDTO> placeDTOS = new ArrayList<>();
         if (userDTO.getPlacesId() != null) {
             List<Long> placesId = userDTO.getPlacesId();
@@ -49,11 +55,10 @@ public class UserPanelPageController {
                 placeDTOS.add(placeService.getPlaceDTOById(placeId));
             }
         }
-
+        model.addAttribute("loggedUserDTO", loggedUserDTO);
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("activeTab", activeTab);
         model.addAttribute("placeDTOS", placeDTOS);
-        model.addAttribute("schemeDTO", schemeDTO);
         return "/WEB-INF/views/user-panel.jsp";
     }
 

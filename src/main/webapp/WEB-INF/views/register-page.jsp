@@ -26,19 +26,23 @@
             <form method="post" action="/register">
                 <div class="form-group">
                     <label for="username">Nazwa użytkownika</label>
-                    <input type="text" required name="username" id="username" class="form-control" placeholder="Podaj nazwę użytkownika"/>
+                    <input type="text" required name="username" id="username" class="form-control"
+                           placeholder="Podaj nazwę użytkownika" autofocus="autofocus"/>
                 </div>
                 <div class="form-group">
                     <label for="password">Hasło</label>
-                    <input type="password" required name="password" id="password" class="form-control" placeholder="Podaj hasło"/>
+                    <input type="password" required name="password" id="password" class="form-control"
+                           placeholder="Podaj hasło"/>
                 </div>
                 <div class="form-group">
                     <label for="firstName">Imię</label>
-                    <input type="text" required name="firstName" id="firstName" class="form-control" placeholder="Podaj imię"/>
+                    <input type="text" required name="firstName" id="firstName" class="form-control"
+                           placeholder="Podaj imię"/>
                 </div>
                 <div class="form-group">
                     <label for="lastName">Nazwisko</label>
-                    <input type="text" required name="lastName" id="lastName" class="form-control" placeholder="Podaj nazwisko"/>
+                    <input type="text" required name="lastName" id="lastName" class="form-control"
+                           placeholder="Podaj nazwisko"/>
                 </div>
                 <button class="btn btn-primary" type="submit">Zarejestruj</button>
                 <button class="btn btn-secondary" type="reset">Wyczyść dane</button>
