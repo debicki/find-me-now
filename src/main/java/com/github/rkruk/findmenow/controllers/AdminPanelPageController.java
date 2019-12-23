@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,16 @@ public class AdminPanelPageController {
 
     @GetMapping
     public String showAdminPanelPage(Model model,
+                                     Principal principal,
                                      @RequestParam(name = "tab", required = false, defaultValue = "0") Long tabNumber) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+        Long loggedUserId = userService.getIdOfLoggedUser(principal.getName());
+        UserDTO userDTO = userService.getOne(loggedUserId);
+        if (!userDTO.getRole().equals("ROLE_ADMIN")) {
+            return "redirect:/";
+        }
         model.addAttribute("tabNumber", tabNumber);
         List<SchemeDTO> allSchemeDTOs = new ArrayList<>();
         List<UserDTO> allUserDTOs = new ArrayList<>();
